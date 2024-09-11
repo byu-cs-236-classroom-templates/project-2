@@ -72,7 +72,7 @@ class Predicate:
 
     def __str__(self) -> str:
         parameters: str = ",".join([i.value for i in self.parameters])
-        return "{}({})".format(self.name, parameters)
+        return f"{self.name}({parameters})"
 
     def add_parameter(self, parameter: Parameter) -> None:
         """Add a parameter to the predicate.
@@ -226,7 +226,7 @@ class DatalogProgram:
             self.domain: set[str] = set()
 
         def _header(self, name: str, size: int) -> str:
-            return "{}({}):".format(name, str(size))
+            return f"{name}({str(size)}):"
 
         def enter_schemes(self, schemes: list[Predicate]) -> None:
             header = self._header("Schemes", len(schemes))
@@ -276,7 +276,7 @@ class DatalogProgram:
             self.strings.append("\n  ".join(sorted(self.domain)))
 
         def enter_scheme(self, scheme: Predicate) -> None:
-            self.strings.append("\n  {}".format(str(scheme)))
+            self.strings.append(f"\n  {str(scheme)}")
 
         def enter_fact(self, fact: Predicate) -> None:
             """Add literals to the domain and update the string.
@@ -286,14 +286,14 @@ class DatalogProgram:
             the fact.
             """
             self.domain.update([i.value for i in fact.parameters])
-            self.strings.append("\n  {}.".format(str(fact)))
+            self.strings.append(f"\n  {str(fact)}.")
 
         def enter_rule(self, rule: RuleType) -> None:
             predicates = ",".join([str(i) for i in get_predicates(rule)])
-            self.strings.append("\n  {} :- {}.".format(str(get_head(rule)), predicates))
+            self.strings.append(f"\n  {str(get_head(rule))} :- {predicates}.")
 
         def enter_query(self, query: Predicate) -> None:
-            self.strings.append("\n  {}?".format(str(query)))
+            self.strings.append(f"\n  {str(query)}?")
 
         def __str__(self) -> str:
             return "".join(self.strings)
