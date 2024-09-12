@@ -158,24 +158,11 @@ def id_list(token: TokenStream, ids: list[Parameter] = []) -> list[Parameter]:
 
     token.match("COMMA")
     token.advance()
-    ids.append(id(token))
+    token.match("ID")
+    ids.append(Parameter.id(token.value()))
+    token.advance()
 
     return id_list(token, ids)
-
-
-def id(token: TokenStream) -> Parameter:
-    """Parse and build an ID parameter.
-
-    ```
-    id
-      : ID
-      ;
-    ```
-    """
-    token.match("ID")
-    parameter = Parameter.id(token.value())
-    token.advance()
-    return parameter
 
 
 def parse(token_iterator: Iterator[Token]) -> DatalogProgram:
