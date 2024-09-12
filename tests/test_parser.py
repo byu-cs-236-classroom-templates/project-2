@@ -33,7 +33,17 @@ def test_given_token_stream_when_advance_then_stutter_last_token():
 
 
 id_list_token_stream = TokenStream(
-    iter([Token.id("A"), Token.id("B"), Token.id("C"), Token.right_paren(")")])
+    iter(
+        [
+            Token.comma(","),
+            Token.id("A"),
+            Token.comma(","),
+            Token.id("B"),
+            Token.comma(","),
+            Token.id("C"),
+            Token.right_paren(")"),
+        ]
+    )
 )
 id_list_expected = [Parameter.id("A"), Parameter.id("B"), Parameter.id("C")]
 

@@ -43,6 +43,9 @@ class TokenStream:
         self._token_iterator = token_iterator
         self.advance()
 
+    def __repr__(self) -> str:
+        return f"TokenStream(token={self.token!r}, _token_iterator={self._token_iterator!r})"
+
     def advance(self) -> None:
         """Advances the iterator and updates the token.
 
@@ -122,6 +125,14 @@ def datalog_program(token: TokenStream) -> DatalogProgram:
 def id_list(token: TokenStream, ids: list[Parameter] = []) -> list[Parameter]:
     """Parse and build a list of ID parameters from a stream.
 
+    ```
+    id_list
+        : COMMA id
+        | lambda
+        ;
+    ```
+
+    Here is the context fro the `id_list` rule: `LEFT_PAREN id id_list RIGHT_PAREN`
     The follow set is checked to account for the lambda reduction on the list.
     After that, the `TokenStream.match` raises an exception if the token does not match.
     It is equivalent to the following code:
@@ -145,10 +156,26 @@ def id_list(token: TokenStream, ids: list[Parameter] = []) -> list[Parameter]:
     if token.member_of(follow):
         return ids
 
-    token.match("ID")
-    ids.append(Parameter.id(token.value()))
+    token.match("COMMA")
     token.advance()
+    ids.append(id(token))
+
     return id_list(token, ids)
+
+
+def id(token: TokenStream) -> Parameter:
+    """Parse and build an ID parameter.
+
+    ```
+    id
+      : ID
+      ;
+    ```
+    """
+    token.match("ID")
+    parameter = Parameter.id(token.value())
+    token.advance()
+    return parameter
 
 
 def parse(token_iterator: Iterator[Token]) -> DatalogProgram:

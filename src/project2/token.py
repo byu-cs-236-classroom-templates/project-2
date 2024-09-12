@@ -83,6 +83,9 @@ class Token:
         self.value: str = value
         self.line_num: int = line_num
 
+    def __repr__(self) -> str:
+        return f"Token(token_type={self.token_type!r}, value={self.value!r}, line_num={self.line_num!r})"
+
     def __str__(self) -> str:
         """Return the string representation of the token
 
