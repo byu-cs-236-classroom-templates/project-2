@@ -93,6 +93,11 @@ class TokenStream:
         return self.token.value
 
 
+def comma(token: TokenStream) -> None:
+    token.match("COMMA")
+    token.advance()
+
+
 def datalog_program(token: TokenStream) -> DatalogProgram:
     """Top-level grammar rule for a Datalog program.
 
@@ -120,6 +125,13 @@ def datalog_program(token: TokenStream) -> DatalogProgram:
     """
 
     raise NotImplementedError
+
+
+def id(token: TokenStream) -> Parameter:
+    token.match("ID")
+    parameter = Parameter.id(token.value())
+    token.advance()
+    return parameter
 
 
 def id_list(token: TokenStream, ids: list[Parameter] = []) -> list[Parameter]:
@@ -156,11 +168,9 @@ def id_list(token: TokenStream, ids: list[Parameter] = []) -> list[Parameter]:
     if token.member_of(follow):
         return ids
 
-    token.match("COMMA")
-    token.advance()
-    token.match("ID")
-    ids.append(Parameter.id(token.value()))
-    token.advance()
+    comma(token)
+    parameter = id(token)
+    ids.append(parameter)
 
     return id_list(token, ids)
 
