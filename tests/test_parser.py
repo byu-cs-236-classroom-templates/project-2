@@ -1,24 +1,56 @@
-from project2.parser import _Parser
+import pytest
+
+from project2.datalogprogram import Parameter
+from project2.parser import id_list, TokenStream
 from project2.token import Token
 
 
-def test_given_token_iterator_when_match_token_then_stutter_last_token():
+def test_given_token_stream_when_advance_then_stutter_last_token():
     # given
     token_list = [Token.colon(":"), Token.eof("")]
     token_iterator = iter(token_list)
-    parser = _Parser(token_iterator)
+    token = TokenStream(token_iterator)
 
     # when
-    parser._match_token("COLON")
+    token.match("COLON")
+    token.advance()
+
     # then
-    assert parser._token == Token.eof("")
+    assert token.token == Token.eof("")
 
     # when
-    parser._match_token("EOF")
+    token.match("EOF")
+    token.advance()
+
     # then
-    assert parser._token == Token.eof("")
+    assert token.token == Token.eof("")
 
     # when
-    parser._match_token("EOF")
+    token.match("EOF")
+
     # then
-    assert parser._token == Token.eof("")
+    assert token.token == Token.eof("")
+
+
+id_list_token_stream = TokenStream(
+    iter([Token.id("A"), Token.id("B"), Token.id("C"), Token.right_paren(")")])
+)
+id_list_expected = [Parameter.id("A"), Parameter.id("B"), Parameter.id("C")]
+
+
+@pytest.mark.parametrize(
+    argnames=["rule", "token_stream", "expected"],
+    argvalues=[(id_list, id_list_token_stream, id_list_expected)],
+    ids=["id_list"],
+)
+def test_given_valid_token_stream_when_parse_rule_then_match_value(
+    rule, token_stream, expected
+):
+    # given
+    # test_input
+
+    # when
+    answer = rule(token_stream)
+
+    # then
+    assert expected == answer

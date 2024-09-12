@@ -5,7 +5,7 @@ and a `DatalogProgram`. New is the listener pattern for interacting with a
 datalog program. See the `DatalogProgram.PrintListener` for an example.
 """
 
-from typing import Literal
+from typing import Any, Literal
 
 ParameterType = Literal["ID", "STRING"]
 """
@@ -30,6 +30,18 @@ class Parameter:
     def __init__(self, value: str, parameter_type: ParameterType) -> None:
         self.value = value
         self.parameter_type = parameter_type
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, Parameter):
+            return False
+        return (self.parameter_type == other.parameter_type) and (
+            self.value == other.value
+        )
+
+    def __repr__(self) -> str:
+        return (
+            f"Parameter(value={self.value!r}, parameter_type={self.parameter_type!r})"
+        )
 
     def is_id(self) -> bool:
         """True iff it is an ID parameter."""
@@ -69,6 +81,14 @@ class Predicate:
     def __init__(self, name: str, parameters: list[Parameter] = []) -> None:
         self.name = name
         self.parameters = parameters
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, Predicate):
+            return False
+        return (self.name == other.name) and (self.parameters == other.parameters)
+
+    def __repr__(self) -> str:
+        return f"Predicate(name={self.name!r}, parameters={self.parameters!r})"
 
     def __str__(self) -> str:
         parameters: str = ",".join([i.value for i in self.parameters])
