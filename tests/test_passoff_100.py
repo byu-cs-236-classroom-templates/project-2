@@ -1,3 +1,4 @@
+# type: ignore
 from tests import passoff_utils
 
 

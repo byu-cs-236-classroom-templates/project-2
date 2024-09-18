@@ -1,3 +1,4 @@
+# type: ignore
 import pytest
 
 from project2.datalogprogram import Parameter
