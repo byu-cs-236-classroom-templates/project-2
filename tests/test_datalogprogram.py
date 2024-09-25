@@ -29,7 +29,7 @@ from project2.datalogprogram import DatalogProgram, Parameter, Predicate
     ],
     ids=["empty", "one", "many", "mix"],
 )
-def test_givin_predicate_when_str_then_match_expected(
+def test_given_predicate_when_str_then_match_expected(
     test_input: Predicate, expected: str
 ):
     # given

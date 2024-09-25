@@ -57,7 +57,7 @@ def project2cli() -> None:
       Queries:
       WhoMajor('Roosevelt',N)?
 
-    $ project1 prog.txt
+    $ project2 prog.txt
     Success!
     Schemes(2):
       student(N, I, A, M)

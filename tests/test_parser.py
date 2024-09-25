@@ -1,8 +1,5 @@
 # type: ignore
-import pytest
-
-from project2.datalogprogram import Parameter
-from project2.parser import id_list, TokenStream
+from project2.parser import TokenStream
 from project2.token import Token
 
 
@@ -32,6 +29,13 @@ def test_given_token_stream_when_advance_then_stutter_last_token():
     # then
     assert token.token == Token.eof("")
 
+
+"""
+Here is an example test for testing the id_list production (it assumes there is an id_list function defined in the parser.py file):
+
+import pytest
+from project2.datalogprogram import Parameter
+from project2.parser import id_list, TokenStream
 
 id_list_token_stream = TokenStream(
     iter(
@@ -65,3 +69,4 @@ def test_given_valid_token_stream_when_parse_rule_then_match_value(
 
     # then
     assert expected == answer
+"""

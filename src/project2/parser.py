@@ -7,7 +7,7 @@ programs.
 from typing import Iterator
 
 from project2.token import Token, TokenType
-from project2.datalogprogram import DatalogProgram, Parameter
+from project2.datalogprogram import DatalogProgram
 
 
 class UnexpectedTokenException(Exception):
@@ -93,11 +93,6 @@ class TokenStream:
         return self.token.value
 
 
-def comma(token: TokenStream) -> None:
-    token.match("COMMA")
-    token.advance()
-
-
 def datalog_program(token: TokenStream) -> DatalogProgram:
     """Top-level grammar rule for a Datalog program.
 
@@ -127,59 +122,11 @@ def datalog_program(token: TokenStream) -> DatalogProgram:
     raise NotImplementedError
 
 
-def id(token: TokenStream) -> Parameter:
-    token.match("ID")
-    parameter = Parameter.id(token.value())
-    token.advance()
-    return parameter
-
-
-def id_list(token: TokenStream, ids: list[Parameter] = []) -> list[Parameter]:
-    """Parse and build a list of ID parameters from a stream.
-
-    ```
-    id_list
-        : COMMA id
-        | lambda
-        ;
-    ```
-
-    Here is the context fro the `id_list` rule: `LEFT_PAREN id id_list RIGHT_PAREN`
-    The follow set is checked to account for the lambda reduction on the list.
-    After that, the `TokenStream.match` raises an exception if the token does not match.
-    It is equivalent to the following code:
-
-    ```
-    if token.token.token_type != "ID":
-        raise UnexpectedTokenException("ID", token.token)
-    ```
-
-    The `TokenStream.match` avoids having to write the same check for every rule.
-
-    Args:
-        token: The token stream.
-        ids: The current set of parameters from the parse.
-
-    Returns:
-        out: the list of ID parameters from the parse.
-    """
-    follow: set[TokenType] = {"RIGHT_PAREN"}
-
-    if token.member_of(follow):
-        return ids
-
-    comma(token)
-    parameter = id(token)
-    ids.append(parameter)
-
-    return id_list(token, ids)
-
-
 def parse(token_iterator: Iterator[Token]) -> DatalogProgram:
     """Parse a datalog program.
 
     A convenience function that avoids having to create an instance of the
-    `_Parser` class.
+    `TokenStream`
     """
     token: TokenStream = TokenStream(token_iterator)
     return datalog_program(token)
