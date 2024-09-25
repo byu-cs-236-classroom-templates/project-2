@@ -41,7 +41,7 @@ def run_fsm(fsm: "FiniteStateMachine", input_string: str) -> tuple[int, Token]:
 
     Examples:
 
-        >>> from project1.fsm import run_fsm, Colon
+        >>> from project2.fsm import run_fsm, Colon
         >>> colon = Colon()
         >>> input_string = ": a"
         >>> number_chars_read, token = run_fsm(colon, input_string)

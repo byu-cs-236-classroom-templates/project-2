@@ -7,7 +7,7 @@ allowed orders of the syntactic types that constitute valid Datalog syntax.
 This module defines the syntactic types for Datalog.
 
 Examples:
-    >>> from project1.token import Token
+    >>> from project2.token import Token
     >>> colon = Token.colon(":")
     >>> colon.line_num = 10
     >>> print(colon)

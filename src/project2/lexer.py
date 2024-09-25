@@ -5,7 +5,7 @@ stream of tokens from the `input_string`.
 
 Examples:
 
-    >>> from project1.lexer import lexer
+    >>> from project2.lexer import lexer
     >>> input_string = ":\\n  \\n:"
     >>> for i in lexer(input_string):
     ...     print(i)
