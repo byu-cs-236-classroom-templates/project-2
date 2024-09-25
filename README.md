@@ -56,7 +56,7 @@ Please do not edit any of the following files or directories as they are related
 
 The project is divided into the following modules each representing a key component:
 
-  * `src/project2/datalogprogram.py`: defines the `Parameter`, `Predicate`, and `DatalogProgram` classes with the `RuleType` definition as a tuple with support functions.
+  * `src/project2/datalogprogram.py`: defines the `Parameter`, `Predicate`, `Rule`, and `DatalogProgram` classes.
   * `src/project2/parser.py`: defines `UnexpectedTokenException`, `TokenStream`, and the `parse` function entry point used by `project2.py`.
   * `src/project2/project2.py`: defines the entry point for auto-grading and the command line entry point.
 
@@ -68,7 +68,7 @@ The `parser.parse` function needs to build, and return, an instance of a `Datalo
 
 A `DatalogProgram` consists of `schemes`, `facts`, `rules`, and `queries`. The `schemes`, `facts`, and `queries` are of `List[Predicate]` type. The predicates in `schemes` can only have `ID` types for parameters. The predicates in `facts` can only have `STRING` types for parameters. The predicates `queries` can have `ID` or `STRING` parameter types.
 
-A rule consists of a _head_ predicate with a list of predicates. The `RuleType` is defined as `tuple[Predicate, list[Predicate]]`. The head predicate only has `ID` parameter types while the predicates in the list can have either `ID` or `STRING` in the parameters. For convenience, `def get_head(rule: RuleType) -> Predicate` returns the head predicate while `def get_predicates(rule: RuleType) -> list[Predicate]` returns the predicate list from the rule respectively.
+A rule consists of a _head_ predicate with a list of predicates. The head predicate only has `ID` parameter types while the predicates in the list can have either `ID` or `STRING` in the parameters. These attributes are accessed directly as in `rule.head` and `rule.predicates` where `rule` is an instance of the `Rule` class.
 
 The `Parameter` and `Predicate` classes both have an implemented the `__str__` function for pretty printing. The implementation `DatalogProgram.__str__` is **not given and must be implemented by you.** The are tests in `./tests/test_datalogprogram.py` to test the `DatalogProgram.__str__` function. The tests should pass when the function is implemented correctly.
 

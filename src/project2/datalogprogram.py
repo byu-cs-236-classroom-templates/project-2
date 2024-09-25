@@ -1,6 +1,6 @@
 """Representation for a Datalog program.
 
-The module includes abstractions for the `Parameter`, `Predicate`, `RuleType`,
+The module includes abstractions for the `Parameter`, `Predicate`, `Rule`,
 and a `DatalogProgram`. New is the listener pattern for interacting with a
 datalog program. See the `DatalogProgram.PrintListener` for an example.
 """
@@ -21,8 +21,8 @@ class Parameter:
     token counterparts.
 
     Attributes:
-        value: The actual text for the parameter taken from the associated token.
-        parameter_type: The type of the parameter: ID or STRING.
+        value (str): The actual text for the parameter taken from the associated token.
+        parameter_type (ParameterType): The type of the parameter: ID or STRING.
     """
 
     __slots__ = ["value", "parameter_type"]
@@ -72,8 +72,8 @@ class Predicate:
     and the later for literals.
 
     Attributes:
-        name: The name of the predicate.
-        parameters: The parameter list.
+        name (str): The name of the predicate.
+        parameters (list[Parameter]): The parameter list.
     """
 
     __slots__ = ["name", "parameters"]
@@ -106,23 +106,35 @@ class Predicate:
         self.parameters.append(parameter)
 
 
-RuleType = tuple[Predicate, list[Predicate]]
-"""
-`RuleType` is the abstraction for a rule. It consists of the head predicate
-and a list of predicates. The head predicate names the destination for any
-facts created by the rule. The list of predicates define how to create
-facts.
-"""
+class Rule:
+    """Rule class consisting of a head and list of predicates.
 
+    There are two components to a rule: the head predicate and then a list
+    of predicates. The head predicate defines the resulting relation. The list
+    of predicates define how tuples are generated for the relation.
 
-def get_head(rule: RuleType) -> Predicate:
-    """Return the head predicate from a rule."""
-    return rule[0]
+    Attributes:
+        head (Predicate): The head predicate.
+        predicates (list[Predicate]): The list of predicates comprising this rule.
+    """
 
+    __slots__ = ["head", "predicates"]
 
-def get_predicates(rule: RuleType) -> list[Predicate]:
-    """Return the predicate list from a rule."""
-    return rule[1]
+    def __init__(self, head: Predicate, predicates: list[Predicate]) -> None:
+        self.head = head
+        self.predicates = predicates
+
+    def __eq__(self, other: Any) -> bool:
+        if not isinstance(other, Rule):
+            return False
+        return (self.head == other.head) and (self.predicates == other.predicates)
+
+    def __repr__(self) -> str:
+        return f"Rule(head={self.head!r}, predicates={self.predicates!r})"
+
+    def __str__(self) -> str:
+        predicates = ",".join([str(i) for i in self.predicates])
+        return f"{str(self.head)} :- {predicates}"
 
 
 class DatalogProgram:
@@ -132,10 +144,10 @@ class DatalogProgram:
     queries for the program.
 
     Attributes:
-        schemes: The list of schemes as predicates.
-        facts: The list of facts as predicates.
-        rules: The list of rules as `RuleType` instances.
-        queries: The list of queries as predicates.
+        schemes (list[Predicate]): The list of schemes as predicates.
+        facts (list[Predicate]): The list of facts as predicates.
+        rules (list[Rule]): The list of rules.
+        queries (list[Predicate]): The list of queries as predicates.
     """
 
     __slots__ = ["schemes", "facts", "rules", "queries"]
@@ -144,7 +156,7 @@ class DatalogProgram:
         self,
         schemes: list[Predicate] = [],
         facts: list[Predicate] = [],
-        rules: list[RuleType] = [],
+        rules: list[Rule] = [],
         queries: list[Predicate] = [],
     ):
         self.schemes = schemes
@@ -164,7 +176,7 @@ class DatalogProgram:
         """Add a fact to the list of facts."""
         self.facts.append(fact)
 
-    def add_rule(self, rule: RuleType) -> None:
+    def add_rule(self, rule: Rule) -> None:
         """Add rule to the list of rules."""
         self.rules.append(rule)
 

@@ -1,7 +1,7 @@
 # type: ignore
 import pytest
 
-from project2.datalogprogram import DatalogProgram, Parameter, Predicate
+from project2.datalogprogram import DatalogProgram, Parameter, Predicate, Rule
 
 
 @pytest.mark.parametrize(
@@ -41,6 +41,32 @@ def test_given_predicate_when_str_then_match_expected(
 
     # then
     assert expected == answer
+
+
+def test_given_rule_when_str_then_match_expected():
+    # given
+    head: Predicate = Predicate("WhoMajor", [Parameter.id("N"), Parameter.id("M")])
+    predicates: list[Predicate] = [
+        Predicate(
+            "student",
+            [
+                Parameter.id("N"),
+                Parameter.id("I"),
+                Parameter.id("A"),
+                Parameter.id("M"),
+            ],
+        ),
+        Predicate(
+            "instructor", [Parameter.id("M"), Parameter.id("A"), Parameter.id("Y")]
+        ),
+    ]
+    rule: Rule = Rule(head, predicates)
+
+    # when
+    answer = str(rule)
+
+    # then
+    assert "WhoMajor(N,M) :- student(N,I,A,M),instructor(M,A,Y)" == answer
 
 
 schemes = [
