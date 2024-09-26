@@ -1,7 +1,7 @@
-"""Function to call parser for Datalog.
+"""Function to call the parser for Datalog.
 
 These are the two project level entry points: `project2` and `project2cli`.
-All the pass-off tests use `project2`.
+All the pass-off tests use `project2`. This file should not need to be modified.
 """
 
 from sys import argv
@@ -21,10 +21,10 @@ def project2(input_string: str) -> str:
     token in the parse.
 
     Args:
-        input_string: The string to parse.
+        input_string (str): The string to parse.
 
     Returns:
-        out: The string representation of the `DatalogProgram` or unexpected token from the parse.
+        out (str): The string representation of the `DatalogProgram` or unexpected token from the parse.
     """
     token_iterator: Iterator[Token] = lexer(input_string)
     try:
@@ -38,7 +38,7 @@ def project2cli() -> None:
     """Build the DatalogProgram from the contents of a file.
 
     `project2cli` is only called from the command line in the integrated terminal.
-    Prints the `DatalogProgram `resulting from the contents of the named file.
+    Prints the `DatalogProgram` resulting from the contents of the named file.
 
     Args:
         argv (list[str]): Generated from the command line and needs to name the input file.

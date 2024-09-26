@@ -1,8 +1,7 @@
 """Representation for a Datalog program.
 
 The module includes abstractions for the `Parameter`, `Predicate`, `Rule`,
-and a `DatalogProgram`. New is the listener pattern for interacting with a
-datalog program. See the `DatalogProgram.PrintListener` for an example.
+and a `DatalogProgram`.
 """
 
 from typing import Any, Literal
@@ -48,18 +47,18 @@ class Parameter:
         return "ID" == self.parameter_type
 
     def is_string(self) -> bool:
-        """Create iff it is a STRING parameter."""
+        """True iff it is a STRING parameter."""
         return "STRING" == self.parameter_type
 
     @staticmethod
-    def id(name: str) -> "Parameter":
-        """Create an ID parameter."""
-        return Parameter(name, "ID")
+    def id(value: str) -> "Parameter":
+        """Create an ID parameter with value."""
+        return Parameter(value, "ID")
 
     @staticmethod
-    def string(name: str) -> "Parameter":
-        """Create a STRING parameter."""
-        return Parameter(name, "STRING")
+    def string(value: str) -> "Parameter":
+        """Create a STRING parameter with value."""
+        return Parameter(value, "STRING")
 
 
 class Predicate:
@@ -67,9 +66,10 @@ class Predicate:
 
     The predicate is a general structure that is used for schemes, facts,
     rules, and queries. The only difference is in the type of parameters
-    allowed in the predicates where facts, rules, and queries allow for
-    both the ID and STRING parameters --- the former for parts of a relation
-    and the later for literals.
+    allowed in the predicates where rules and queries allow for
+    both the ID and STRING parameters -- the former for parts of a relation
+    and the later for literals while schemes only allow for IDs and facts
+    only allow for STRINGs.
 
     Attributes:
         name (str): The name of the predicate.
@@ -138,7 +138,7 @@ class Rule:
 
 
 class DatalogProgram:
-    """Class for a Datalog program
+    """Class for a Datalog program.
 
     The `Datalog` program class holds all the schemes, rules, facts, and
     queries for the program.
