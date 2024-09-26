@@ -2,15 +2,15 @@
 # FOR USE ONLY DURING SPRING 2021 SEMESTER
 # passoffInput20     SUCCESS
 # This tests their 'success' with a few comments tokens now and then
-  #Schemes: 
-Schemes: 
+  #Schemes:
+Schemes:
   #student(N, I, A, M)
 student(N, I, A, M)
   #WhoMajor(N,M)
 WhoMajor(N,M)
 
-Facts: 
-  #Facts: 
+Facts:
+  #Facts:
 student('Roosevelt', '51', '10 Main', 'Econ').
   #student('Roosevelt', '51', '10 Main', 'Econ').
 student('Reagan','52', '11 Maple', 'Econ').
@@ -32,4 +32,4 @@ WhoMajor('Roosevelt',N)?WhoMajor(M,'Econ')?
 WhoMajor('George Washington','PoliSci')?
   #WhoMajor('George Washington','PoliSci')?
 WhoMajor('Abraham Lincoln','Law')?student('John Adams', I, A, M)?
-  #WhoMajor('Abraham Lincoln','Law')?student('John Adams', I, A, M)? 
+  #WhoMajor('Abraham Lincoln','Law')?student('John Adams', I, A, M)?
