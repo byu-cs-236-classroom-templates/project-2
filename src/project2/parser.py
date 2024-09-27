@@ -125,7 +125,7 @@ def datalog_program(token: TokenStream) -> DatalogProgram:
     ```
     token.match('SCHEMES')
     token.advance()
-    token.match_token('COLON')
+    token.match('COLON')
     token.advance()
 
     schemes: list[Predicate] = [scheme(token)]
