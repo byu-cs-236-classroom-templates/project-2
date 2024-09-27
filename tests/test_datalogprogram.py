@@ -154,7 +154,7 @@ Domain(15):
   'Roosevelt'"""
 
 rules = [
-    (
+    Rule(
         Predicate("WhoMajor", [Parameter.id("N"), Parameter.id("M")]),
         [
             Predicate(
