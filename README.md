@@ -49,6 +49,10 @@ Copy the below files from your solution to Project 1 into the `src/project2/` fo
 
 The `token.py` file is unchanged here and should not be copied over. None of test files from Project 1 should be copied over either.
 
+### Add COMMENT to hidden
+
+Edit `lexer.py` and add `COMMENT` to the list of hidden tokens. So `WHITESPACE` and `COMMENT` should both be hidden and not passed to the parser.
+
 ### Reminder
 
 Please do not edit any of the following files or directories as they are related to _auto-grading_ and _pass-off_:
