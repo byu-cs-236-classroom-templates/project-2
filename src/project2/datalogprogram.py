@@ -78,7 +78,7 @@ class Predicate:
 
     __slots__ = ["name", "parameters"]
 
-    def __init__(self, name: str, parameters: list[Parameter] = []) -> None:
+    def __init__(self, name: str, parameters: list[Parameter]) -> None:
         self.name = name
         self.parameters = parameters
 
