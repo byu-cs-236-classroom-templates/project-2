@@ -77,7 +77,7 @@ schemes = [
     Predicate("WhoMajor", [Parameter.id("N"), Parameter.id("M")]),
 ]
 
-prog_schemes_only = DatalogProgram(schemes=schemes)
+prog_schemes_only = DatalogProgram(schemes, [], [], [])
 
 schemes_only = """Schemes(2):
   student(N,I,A,M)
@@ -126,7 +126,7 @@ facts = [
     ),
 ]
 
-prog_facts_only = DatalogProgram(facts=facts)
+prog_facts_only = DatalogProgram([], facts, [], [])
 
 facts_only = """Schemes(0):
 Facts(4):
@@ -173,7 +173,7 @@ rules = [
     )
 ]
 
-prog_rules_only = DatalogProgram(rules=rules)
+prog_rules_only = DatalogProgram([], [], rules, [])
 
 rules_only = """Schemes(0):
 Facts(0):
@@ -222,7 +222,7 @@ queries = [
     ),
 ]
 
-prog_queries_only = DatalogProgram(queries=queries)
+prog_queries_only = DatalogProgram([], [], [], queries)
 
 queries_only = """Schemes(0):
 Facts(0):

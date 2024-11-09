@@ -154,10 +154,10 @@ class DatalogProgram:
 
     def __init__(
         self,
-        schemes: list[Predicate] = [],
-        facts: list[Predicate] = [],
-        rules: list[Rule] = [],
-        queries: list[Predicate] = [],
+        schemes: list[Predicate],
+        facts: list[Predicate],
+        rules: list[Rule],
+        queries: list[Predicate],
     ):
         self.schemes = schemes
         self.facts = facts
