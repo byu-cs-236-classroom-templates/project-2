@@ -1,7 +1,5 @@
 #!/bin/sh
-
-# Upgrade pip
-pip install --upgrade pip
+set -e
 
 # Install the package
 pip install --user --editable ".[dev]"
