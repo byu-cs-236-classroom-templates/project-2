@@ -132,8 +132,8 @@ Submit Project 2 for grading by doing the following:
 
   * Commit your solution on the master branch
   * Push the commit to GitHub -- that should trigger the auto-grader
-  * Goto [learningsuite.byu.edu](https://learningsuite.byu.edu) at _Assignments_ &rarr; _Projects_ &rarr; _Project 1_ to submit the following:
-    1. Your GitHub ID and Project 1 URL for grading.
+  * Goto [learningsuite.byu.edu](https://learningsuite.byu.edu) at _Assignments_ &rarr; _Projects_ &rarr; _Project 2_ to submit the following:
+    1. Your GitHub ID and Project 2 URL for grading.
     1. A short paragraph outlining (a) how you prompted the AI to generate any code (if you used it) and (b) how you determined the quality and correctness of that code.
     1. A screen shot showing no issues with `pre-commit run --all-files`.
   * Confirm on the GitHub Actions pane that the pass-off tests passed, or alternatively, goto the Project 1 URL, find the green checkmark or red x, and click it to confirm the auto-grader score matches the pass-off results from your system.
@@ -158,6 +158,10 @@ The productions in the grammar can be implemented bottom-up -- starting with `id
 If you use AI to generate productions, be sure it uses tail-recursion with `FOLLOW` sets for any list constructs, and be sure to give it adequate examples from code that you have written so that it follows the expected code structure for the project. The goal of this project is to learn how to implement a recursive descent parser. You should implement, and test, on your own several productions until you understand the pattern clearly. Once you have a solid understanding, then leverage AI to implement the more tedious, and simple, productions. As before, provide code examples for the AI to use.
 
 ### FAQ
+
+#### Should I use a branch with git?
+
+Consider using a branch as you work on your submission so that you can `commit` your work from time to time. Once everything is working, and the auto-grader tests are passing, then you can `merge` your work into your master branch and push it to your GitHub repository. Ask your favorite AI for help learning how to use Git branches for feature development.
 
 #### How do I gather lists of objects while parsing?
 
@@ -227,19 +231,3 @@ To determine what needs to be in these classes, use the code and the grammar as 
 #### Should you store token types in the data structures created by the parser?
 
 No, don't store tokens or token types in the data structures created by the parser. The data structures created by the parser should be decoupled from both the lexer and the parser as defined by the data structures in `src/project2/datalogprogram.py` that you must use.
-
-
-## Pass-off and Submission
-
-The minimum standard for this project is **bucket 80**. That means that if all the tests pass in all buckets up to and including bucket 80, then the next project can be started safely.
-
-The Project 2 submission follows that of the other projects:
-
-  * Commit your solution on the master branch
-  * Push the commit to GitHub -- that should trigger the auto-grader
-  * Goto [learningsuite.byu.edu](https://learningsuite.byu.edu) at _Assignments_ &rarr; _Projects_ &rarr; _Project 2_ to submit your GitHub ID and Project 2 URL for grading.
-  * Goto the Project 2 URL, find the green checkmark or red x, and click it to confirm the auto-grader score matches the pass-off results from your system.
-
-### Branches
-
-Consider using a branch as you work on your submission so that you can `commit` your work from time to time. Once everything is working, and the auto-grader tests are passing, then you can `merge` your work into your master branch and push it to your GitHub repository. Ask your favorite search engine or generative AI for help learning how to use Git feature branches.
