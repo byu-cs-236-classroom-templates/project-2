@@ -64,7 +64,7 @@ This diagram may be helpful in understanding the data structures.
 
 # Output Format
 
-The starter code already includes what is needed for the parser output. If the parse is successful, it outpus 'Success!' followed by the lists of schemes, facts, rules, queries in the resulting `DatalogProgram` instance. The output includes the number of items in each list as shown in the example output below. The schemes, facts, rules, and queries appear in the same order in which they appear in the input.
+The starter code already includes what is needed for the parser output. If the parse is successful, it outputs 'Success!' followed by the lists of schemes, facts, rules, queries in the resulting `DatalogProgram` instance. The output includes the number of items in each list as shown in the example output below. The schemes, facts, rules, and queries appear in the same order in which they appear in the input.
 
 The starter code also outputs the set of the domain values that appear in the Datalog program. The domain values are the strings (surrounded by quotes) that appear in the facts. Note that strings that only appear in the rules or queries sections are not part of the domain. The domain only includes strings found in the facts section. The domain is a set of strings so there are no duplicates. The domain strings appear in sorted order.
 

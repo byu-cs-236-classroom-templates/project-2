@@ -105,7 +105,7 @@ What does `pre-commit` check? The `pre-commit` checks are defined as hooks in th
     * id: `check-yaml`: checks syntax on yaml files.
     * id: `check-added-large-files`: blocks adding large files.
 1. [https://github.com/Lucas-C/pre-commit-hooks](https://github.com/Lucas-C/pre-commit-hooks) for
-    * id: `remove-crlf`: converts all end-of-line encondings to `lf`
+    * id: `remove-crlf`: converts all end-of-line encodings to `lf`
     * id: `remove-tabs`: converts all tabs to spaces.
 1. [https://github.com/astral-sh/ruff-pre-commit](https://github.com/astral-sh/ruff-pre-commit) for
     * id: `ruff`: check for code smells.
