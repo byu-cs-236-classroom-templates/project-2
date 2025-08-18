@@ -10,6 +10,7 @@
   "words": [
     "configfile",
     "Datalog",
+    "datalogprogram",
     "docstrings",
     "doctest",
     "doctests",
@@ -21,6 +22,7 @@
     "pluggy",
     "pyproject",
     "pytest",
+    "repr",
     "rootdir",
     "venv"
   ]

@@ -6,8 +6,8 @@ accepts or rejects to return the resulting characters read and token.
 """
 
 from typing import Callable
-from project2.token import Token
 
+from project2.token import Token
 
 State = Callable[[int, str], "StateAndOutput"]
 """

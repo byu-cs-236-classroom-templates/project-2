@@ -8,92 +8,137 @@ This project uses the `lexer` function from Project 1. That function takes as in
 So the input to the `parser.parse` function is the token iterator from the `lexer` function on some input, and the output from the `parser.parse` function is an instance of the `DatalogProgram` class iff the input is syntactically correct; otherwise it raises an `UnexpectedTokenException`. The `parser.parse` function must implement a predictive top-down parsing algorithm that is recursive.
 
 The predictive top-down parsing algorithm is derived from the Datalog grammar using _FIRST_ and _FOLLOW_ sets for each of the rules in the grammar. The mathematical definition of a grammar, grammar rules, FIRST, FOLLOW, etc. are in the lecture notes on [learningsuite.byu.edu](https://learningsuite.byu.edu) in the _Content_ section. Creating a top-down predictive parsing algorithm from those things is also in the lecture notes. Further, we provide an extensive Jupyter notebook that walks through implementing the `parse` function on a simple example.
-**Before proceeding further, please review the Project 2 project description, lecture slides, and all of the associated Jupyter notebooks. You can thank us later for the suggestion.**
+
+**Summary of Documentation**
+- [README.md](README.md): describes project logistics
+- [PARSER.md](docs/PARSER.md): describes the parser and Datalog grammar
+- [CODE.md](docs/CODE.md): describes the starter code
+- [Recursive descent parsing with FIRST sets](docs/Recursive_descent_parsing_code_example_2024.ipynb) (Jupyter Notebook)
+- [Recursive descent parsing with FOLLOW sets](docs/Recursive_descent_parsing_code_with_FOLLOW_example_2024.ipynb) (Jupyter Notebook)
+- Lecture notes in [learningsuite.byu.edu](https://learningsuite.byu.edu) including slides on _Building your tests for Project 2_.
+
+## Table of Contents
+
+- [Developer Setup](#developer-setup)
+- [Project Requirements](#project-requirements)
+- [Unit Tests](#unit-tests)
+- [Integration Tests (pass-off)](#integration-tests-pass-off)
+- [Code Quality Tools](#code-quality-tools)
+- [Submission and Grading](#submission-and-grading)
+- [Best Practices](#best-practices)
 
 ## Developer Setup
 
-Be sure to read the [WARNING](#warning) and [Copy Files](#copy-files) sections.
+The `vscode` extensions for developing Project 2 are already installed as part of Project 0. You should not need to install any new extensions. You do need to set up the project locally on your machine. The below steps outline the process.
 
-As in Project 1, the first step is to clone the repository created by GitHub Classroom when the assignment was accepted in a sensible directory. In the vscode terminal, `git clone <URL>` where `<URL>` is the one from GitHub Classroom after accepting the assignment. Or open a new vscode window, select _Clone Git Repository_, and paste the link they get when they hover over the "<> Code ▼" and copy the url
+1. Clone the repository to your machine. Accepting the Project 2 assignment on GitHub classroom creates a repository for your submission. You need to clone that repository to your machine. Copy the URL generated after accepting the assignment and in a terminal on your machine in a sensible location. From an integrated terminal, type `git clone \<URL\>` where `\<URL\>` is the one you copied. Or open a new vscode window, select _Clone Git Repository_, and paste the URL you copied. If you followed the URL to GitHub, then you can recopy the URL using the "<> Code ▼" button.
+1. Create and activate a virtual environment in the project directory.  Revisit Project 0 for a reminder on how to create the virtual environment. There is also a _cheat sheet_ at [learningsuite.byu.edu](https://learningsuite.byu.edu) _Content_ &rarr; _Projects_ &rarr; _Projects Cheat Sheet_.
+1. Install the project package. **Be sure your virtual environment is active before installing the package!** In a terminal in the virtual environment in the project directory do: `pip install --editable ".[dev]"`. Use `pip3` instead of `pip` if your system requires it.
+1. Verify the package installation. From the terminal in which you activated the virtual environment and installed the project package, type `project1` and hit enter. You should see the below output.
+    ```
+    $ project1
+    usage: project1 <input file>
+    ```
+1. Install `pre-commit` for the project. **Be sure your virtual environment is active before installing pre-commit!**. In a terminal in the virtual environment in the project directory do: `pre-commit install`
+1. Verify the `pre-commit` installation. From the terminal in which you installed `pre-commit`, type `pre-commit run --all-files` and hit enter. You should see something like the below at the end of the setup output:
+    ```
+    $ pre-commit run --all-files
+    trim trailing whitespace.................................................Passed
+    fix end of files.........................................................Passed
+    check yaml...............................................................Passed
+    check for added large files..............................................Passed
+    CRLF end-lines remover...................................................Passed
+    Tabs remover.............................................................Passed
+    ruff.....................................................................Passed
+    ruff-format..............................................................Passed
+    mypy.....................................................................Passed
+    ```
+1. Verify that tests are ready to run. Open the _Testing Pane_ in VS Code by clicking on the test tube icon. If you see
+    ```
+    pytest Discovery Error [project-1]
+    ```
+    then you must open the _Command Palette_ from the _View_ menu, choose `Python: Select Interpreter`, and choose the interpreter for the virtual environment (probably `Python 3.12.5 (.venv)`).
+1. **IMPORTANT**: Copy the below files from your solution to Project 1 into the `src/project2/` folder:
+    * `fsm.py`
+    * `lexer.py`
+  The `token.py` file is unchanged here and should not be copied over. None of test files from Project 1 should be copied over either.
+1. **IMPORTANT**: edit your `lexer.py` and add `COMMENT` to the list of hidden tokens. So `WHITESPACE` and `COMMENT` should both be hidden and not appear in the token stream.
 
-There is no need to install any vscode extensions. These should all still be present and active from the previous project. You do need to create the virtual environment, install the package, and install pre-commit. For a reminder to how that is done, see on [learningsuite.byu.edu](https://learningsuite.byu.edu) _Content_ &rarr; _Projects_ &rarr; _Projects Cheat Sheet_
+## Project Requirements
 
-  * Create a virtual environment: **be sure to create it in the `project-2` folder.** `python -m venv .venv`
-  * Activate the virtual environment: `source .venv/bin/activate` or `.venv\Scripts\activate` for OSX and windows respectively.
-  * Install the package in edit mode: `pip install --editable ".[dev]"`
-  * Install pre-commit: `pre-commit install`
+1. The project must be completed individually -- there is no group work.
+1. Project pass-off is on GitHub. You will commit your final solution to the `master` branch of your local repository and then push that commit to GitHub. Multiple commits, and pushes, are allowed. A push triggers a GitHub action that is the auto-grader for pass-off. The TAs look at the result of the auto-grader on GitHub, and your code, to determine your final score.
+1. You must pass all integration tests up to, and including, `tests/test_passoff_80.py` to move on to the next project. Bucket 80 is the minimum functionality to complete the course.
+1. You must implement the __str__ method for the `DatalogProgram` class.
+1. You must implement a deterministic top-down parser that chooses which production to use based on the current token.
+    1. You must have a function for each non-terminal and you may use AI to generate the more trivial non-terminals after giving it several examples of one that you have implemented.
+    1. You must implement a recursive-descent parser using `FIRST` sets.
+    1. You must implement tail recursion for the list-generating productions like `schemelist` and `idlist` using `FOLLOW` sets to terminate the recursion. You are not allowed to use any while loops in list productions. **WARNING**: a naive application of an AI tool will produce code that will use a while loop.
+1. You must use the lexer from the previous project to read tokens from the input.
+1. You must use the classes for `DatalogProgram`, `Rule`, `Predicate`, and `Parameter` provided in the starter code.
+1. Your code must not report any issues with the following code quality tool run in the integrated `vscode` terminal from the root of the project directory: `pre-commit run --all-files`. This tool includes _type checking_ so your solution requires type annotations.
 
-The above should result in a `project2` executable that is run from the command line in an integrated terminal. As before, be sure the integrated terminal is in the virtual environment
+Consider using a branch as you work on your submission so that you can `commit` your work from time to time. Once everything is working, and the auto-grader tests are passing, then you can `merge` your work into your master branch and push it to your GitHub repository. Ask your favorite AI for help learning how to use Git branches for feature development.
 
-### WARNING
+## The TokenStream
 
-  * Be sure that the `conda` environment is not active when setting up the project. It's active when there is a `(base)` annotation next to the terminal prompt. The `conda deactivate` command will exit that environment.
-  * Be sure the Python version is at least 3.11 -- `python --version`.
-  * Open the project folder in vscode when working on the project, and not a folder above it or below it, otherwise the paths for the pass-off tests will not work -- the common error is _"no project2 module found"_.
-  * Be sure that vscode is using the virtual environment in the project folder: choose `Python Select Interpreter` from the command pallette and select the Python in the `.venv` folder -- its usually the first option if vscode opened that folder as the workspace.
+We provide a wrapper around the `Iterator[Token]` returned from your `lexer` function in Project 1. The wrapper is designed to make implementing recursive descent parsing with `FIRST` and `FOLLOW` sets easy in regards to matching tokens and advancing to the next token from the lexer.  [parser.py in CODE.md](docs/CODE.md#parserpy) provides a detailed explanation of the `TokenStream` class. `TokenStream` is defined in `src/project2/parser.py` and its definition includes detailed docstrings about its usage. **You are strongly encouraged to read, and be sure you understand, the `TokenStream` write up and docstrings before starting the project.**
 
-## Files
+## Unit Tests
 
-  * `README.md`: overview and directions
-  * `config_test.sh`: support for auto-grading -- **please do not edit**
-  * `pyproject.toml`: package definition and project configuration -- **please do not edit**
-  * `src`: folder for the package source files
-  * `tests`: folder for the package test files
+As stated before, testing will be done through Github Classroom. You can also test your code locally with your own input, and by running the test cases in `vscode`. If you forgot how to do this, review the Project 0 help video here: https://www.youtube.com/watch?v=jZOf5oN-lKA. Just like Project 0, your grade will be whatever grade is on Github Classroom when you submit your code.
 
-### Copy Files
+The `tests/test_parser.py` file does include a _docstring_ at the end of the file showing an example for how you might consider unit testing your parser as you develop. _Test driven development_ (TDD) is a development mindset driven by tests. In general, you write a test for the new functionality, verify the test fails, implement the functionality, and then verify the test passes. TDD is an effective approach to breaking a problem into small manageable pieces.
 
-Copy the below files from your solution to Project 1 into the `src/project2/` folder:
+## Integration Tests (pass-off)
 
-  * `fsm.py`
-  * `lexer.py`
+The primary tests are found in the `tests/test_passoff_xx.py` files. These tests are used for project pass-off. The `xx` on each bucket denotes the available points for passing the tests in that bucket. The value of each test in each bucket is uniform: _points-for-bucket/number-of-tests-in-bucket_. Bucket 80 is the minimum requirement to pass the course.
 
-The `token.py` file is unchanged here and should not be copied over. None of test files from Project 1 should be copied over either.
+## Code Quality Tools (pre-commit)
 
-### Add COMMENT to hidden
+The `pre-commit` tool is an extremely useful tool for checking code quality _before_ before committing into a repository. It works in conjunction with `git commit` using a mechanism called a _hook_. Git provides a way to run code before, and after, certain `git` actions. The `pre-commit install` completed during the [Developer Setup](#developer-setup) installed a hook to run `pre-commit` on staged files on `commit` actions. The result is that anytime you issue a `git commit`, any file included in that commit in checked by `pre-commit`. This behavior can be overridden with the `--no-verify` flag when added at the end of the `git commit` command. Overriding the `pre-commit` hook for `git` is **strongly discouraged** especially since you are required to show that `pre-commit` runs with no warnings or errors as part of the [Project Requirements](#project-requirements).
 
-Edit `lexer.py` and add `COMMENT` to the list of hidden tokens. So `WHITESPACE` and `COMMENT` should both be hidden and not passed to the parser.
+What does `pre-commit` check? The `pre-commit` checks are defined as hooks in the `.pre-commit-config.yaml` file. That file defines the following hooks:
+1. (https://github.com/pre-commit/pre-commit-hooks)[https://github.com/pre-commit/pre-commit-hooks] for
+    * id: `trailing-whitespace`: removes trailing whitespace on any line.
+    * id: `end-of-file-fixer`: makes sure all non-binary files end with a newline.
+    * id: `check-yaml`: checks syntax on yaml files.
+    * id: `check-added-large-files`: blocks adding large files.
+1. [https://github.com/Lucas-C/pre-commit-hooks](https://github.com/Lucas-C/pre-commit-hooks) for
+    * id: `remove-crlf`: converts all end-of-line encondings to `lf`
+    * id: `remove-tabs`: converts all tabs to spaces.
+1. [https://github.com/astral-sh/ruff-pre-commit](https://github.com/astral-sh/ruff-pre-commit) for
+    * id: `ruff`: check for code smells.
+    * id: `ruff-format`: format all code.
+1. [https://github.com/pre-commit/mirrors-mypy](https://github.com/pre-commit/mirrors-mypy) for
+    * id: `mypy`
 
-### Reminder
+The _id_ annotations in the above are the names of the hooks. You can use the names if you want to run a particular hook on a file:
 
-Please do not edit any of the following files or directories as they are related to _auto-grading_ and _pass-off_:
+```
+$ pre-commit run mypy --files src/project2/lexer.py
+mypy.....................................................................Passed
+```
 
-  * `config_test.sh`
-  * `./tests/passoff_utils.py`
-  * `./tests/test_passoff_80.py`
-  * `./tests/test_passoff_100.py`
-  * `./tests/resources/project2-passoff/*`
+The above runs the `mypy` check on `src/project2/lexer.py`. You can give a list of files with the `--files` flag, or you can just run all files known to the repository with `--all-files`.
 
-## Overview
+When a file fails a check, `pre-commit` reports the failure with any needed details to correct it. It automatically modifies files where possible. Modified files will need to be re-added to the `git` index when `pre-commit` fails during `git commit` otherwise you will git the same error reported. Remember, `git commit` only looks at files in the index, so if a file is in the index, and `pre-commit` modifies that file, then a `git status` will show the file in the index **and** the same file as being modified. A `git add <file>` will add the new modified version of the file from `pre-commit` into the index to be committed.
 
-The project is divided into the following modules each representing a key component of the project:
+## Submission and Grading
 
-  * `src/project2/datalogprogram.py`: defines the `Parameter`, `Predicate`, `Rule`, and `DatalogProgram` classes.
-  * `src/project2/parser.py`: defines `UnexpectedTokenException`, `TokenStream`, and the `parse` function entry point used by `project2.py`.
-  * `src/project2/project2.py`: defines the entry point for auto-grading and the command line entry point.
+The minimum standard for this project is **bucket 80**. That means that if all the tests pass in all buckets up to and including bucket 80, then the next project can be started safely. You can run each bucket from the testing pane or with `pytest` on the command line. Passing everything up to and including `test_passoff_80.py` is the minimum requirement to move on to the next project.
 
-Each of the above files are specified with Python _docstrings_ and they also have examples defined with python _doctests_. A _docstring_ is a way to document Python code so that the command `help(project2.parser)` in the Python interpreter outputs information about the module with it's functions and classes. For functions, the docstrings give documentation when the mouse hovers over the function in vscode.
+Submit Project 2 for grading by doing the following:
 
-### datalogprogram.py
+  * Commit your solution on the master branch
+  * Push the commit to GitHub -- that should trigger the auto-grader
+  * Goto [learningsuite.byu.edu](https://learningsuite.byu.edu) at _Assignments_ &rarr; _Projects_ &rarr; _Project 1_ to submit the following:
+    1. Your GitHub ID and Project 1 URL for grading.
+    1. A short paragraph outlining (a) how you prompted the AI to generate any code (if you used it) and (b) how you determined the quality and correctness of that code.
+    1. A screen shot showing no issues with `pre-commit run --all-files`.
+  * Confirm on the GitHub Actions pane that the pass-off tests passed, or alternatively, goto the Project 1 URL, find the green checkmark or red x, and click it to confirm the auto-grader score matches the pass-off results from your system.
 
-The `parser.parse` function needs to build, and return, an instance of a `DatalogProgram`. The program consists of `Predicates`. A predicate has a `name` and a list of `Parameter` objects. A `Parameter` is a `STRING` type or an `ID` type. Both types have a `value` attribute that is taken from the token when the `Parameter` is created, so it's either the value from the `ID` token or the value from the `STRING` token.
-
-A `DatalogProgram` consists of `schemes`, `facts`, `rules`, and `queries`. The `schemes`, `facts`, and `queries` are of `List[Predicate]` type. The predicates in `schemes` can only have `ID` types for parameters. The predicates in `facts` can only have `STRING` types for parameters. The predicates `queries` can have `ID` or `STRING` parameter types.
-
-A rule consists of a _head_ predicate with a list of predicates. The head predicate only has `ID` parameter types while the predicates in the list can have either `ID` or `STRING` in the parameters. These attributes are accessed directly as in `rule.head` and `rule.predicates` where `rule` is an instance of the `Rule` class.
-
-The `Parameter` and `Predicate` classes both have an implementation of the `__str__` function for pretty printing. The implementation `DatalogProgram.__str__` is **not given and must be implemented by you.** The are tests in `./tests/test_datalogprogram.py` to test the `DatalogProgram.__str__` function. The tests should pass when the function is implemented correctly. There are also `__repr__` functions defined for the classes. These make debugging easier. As your favorite LLM, _"What are the __reper__ functions for in Python?"_
-
-### parser.py
-
-The bulk of the coding for the project is in the `parser.py` module. See the project description, lecture notes, and Jupiter notebooks on [learningsuite.byu.edu](https://learningsuite.byu.edu) in the _Content_ section in both _Lectures_ and _Projects_.
-
-Provided for your convenience is the `TokenStream` class that is able to  `match` and `advance` the token iterator from the lexer. It raises an `UnexpectedTokenException` when `TokenStream.match` fails. These are fully implemented and should be used by your parser.
-
-### project2.py
-
-The entry point for the auto-grader and the `project2` command. See the docstrings for details.
-
-## Where to start
+## Best Practices
 
 Here is the suggested order for Project 2:
 
@@ -109,6 +154,80 @@ Here is the suggested order for Project 2:
 1. Run the pass-off tests -- debug as needed
 
 The productions in the grammar can be implemented bottom-up -- starting with `id`, `id_list`, `scheme`, etc. -- or top down -- starting with `datalog_program`, `scheme`, `id`, `id_list`, etc. Bottom up may be easier though because `id` creates an instance of `str`, that is used by `id_list` to create a `list[Parameter]` instance, that is then used to create a `Predicate` for a `scheme`. In any case, work on, and test, productions one at a time.
+
+If you use AI to generate productions, be sure it uses tail-recursion with `FOLLOW` sets for any list constructs, and be sure to give it adequate examples from code that you have written so that it follows the expected code structure for the project. The goal of this project is to learn how to implement a recursive descent parser. You should implement, and test, on your own several productions until you understand the pattern clearly. Once you have a solid understanding, then leverage AI to implement the more tedious, and simple, productions. As before, provide code examples for the AI to use.
+
+### FAQ
+
+#### How do I gather lists of objects while parsing?
+
+Implementing grammar rules such as `schemeList` from the [Datalog Grammar](docs/PARSER.md#datalog-grammar) requires you to capture, and save, every `scheme` in the list. Recall that a `scheme` will be an instance of `Predicate` in our data structures. So how do you capture, and save, the `Predicate` instances from each match on the `scheme` rule.
+
+First, the function for `scheme` should be `def scheme(token: TokenStream) -> Predicate` so that it returns the `Predicate` resulting from a successful parse of the `scheme` rule in the [Datalog Grammar](docs/PARSER.md#datalog-grammar). Note: matching the `scheme` production means that `token`, which is a `TokenStream`, has advanced past all the tokens used to match the `scheme` grammar rule. So `scheme(token)` returns a `Predicate` on success. But how do you collect each of these as you parse the `schemeList` production since that production is recursive?
+
+You have two choices:
+
+1. Side-effect on a passed in list and have the `scheme` function return nothing; or
+1. Add the `Predicate` from the matched `scheme` to the returned list from the recursive call on the way out of recursion.
+
+There are pros, and cons, to each approach.
+
+The first solution becomes:
+
+```
+def scheme_list(token: TokenStream, pred_list: list[Predicate]) -> None
+```
+
+And is called as
+
+```
+pred_list: list[Predicate] = list()
+scheme_list(token, pred_list)
+```
+
+The second solution becomes:
+
+```
+def scheme_list(token: TokenStream) -> list[Predicate]
+```
+
+And is called as:
+
+```
+pred_list: list[Predicate] = scheme_list(token, pred_list)
+```
+
+But here inside the implementation, where you have the recursive call, you need something like the below with the base case returning an empty list.
+
+```
+pred: Predicate = scheme(token)
+return [Predicate] + scheme_list(token)
+```
+
+A con to the first approach is the side-effecting on the `pred_list` parameter whereas a con on the second approach is the copying of the list over and over again with the `+` operator. A hybrid approach is also possible where `scheme_list` returns `list[Predicate]` but the returned list is mutated on the way out of recursion.
+
+#### What's a good way to organize your work on this project?
+
+A good approach is to complete the project in three steps:
+
+1. write a parser that only checks syntax -- this is the recursive-descent part. It does not build the final `DatalogProgram`.
+1. add code to the parser to create the `DatalogProgram`. This can be done easily without modifying the lines of code that were created in the first step. For example when a parameter is being parsed a `Parameter` object is created and returned, then saved in the appropriate place.
+
+#### What's a good way to handle syntax errors?
+
+A good approach is to use exceptions to handle syntax errors. Throw an exception when the parser detects a syntax error. The `project2` function in `src/project2/project2.py` is already configured to catch the `UnexpectedTokenException` on a parse error and produce the correct output. **Don't return a boolean from each parsing routine to indicate a syntax error; just throw the `UnexpectedTokenException` with the offending token.
+
+#### Why do you need the Parameter, Predicate, Rule, and Datalog Program classes, and what should be in these classes?
+
+You need these classes because the next project builds on this project and these classes are needed for the next project. These new classes should not store tokens.
+
+To determine what needs to be in these classes, use the code and the grammar as a guide. The code defines the class member variables. And in the grammar a predicate is defined as: ID LEFT_PAREN parameter parameterList RIGHT_PAREN. This means a predicate object needs to store a string (to hold the value of the initial ID) and a list of Parameter objects.
+
+
+#### Should you store token types in the data structures created by the parser?
+
+No, don't store tokens or token types in the data structures created by the parser. The data structures created by the parser should be decoupled from both the lexer and the parser as defined by the data structures in `src/project2/datalogprogram.py` that you must use.
+
 
 ## Pass-off and Submission
 

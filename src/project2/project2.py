@@ -9,7 +9,7 @@ from typing import Iterator
 
 from project2.datalogprogram import DatalogProgram
 from project2.lexer import lexer
-from project2.parser import parse, UnexpectedTokenException
+from project2.parser import UnexpectedTokenException, parse
 from project2.token import Token
 
 

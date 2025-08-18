@@ -18,7 +18,7 @@ Examples:
     (ID,"id",42)
 """
 
-from typing import Literal, Any
+from typing import Any, Literal
 
 TokenType = Literal[
     "COLON",

@@ -6,8 +6,8 @@ programs.
 
 from typing import Iterator
 
-from project2.token import Token, TokenType
 from project2.datalogprogram import DatalogProgram
+from project2.token import Token, TokenType
 
 
 class UnexpectedTokenException(Exception):
