@@ -69,7 +69,7 @@ The `vscode` extensions for developing Project 2 are already installed as part o
 1. The project must be completed individually -- there is no group work.
 1. Project pass-off is on GitHub. You will commit your final solution to the `master` branch of your local repository and then push that commit to GitHub. Multiple commits, and pushes, are allowed. A push triggers a GitHub action that is the auto-grader for pass-off. The TAs look at the result of the auto-grader on GitHub, and your code, to determine your final score.
 1. You must pass all integration tests up to, and including, `tests/test_passoff_80.py` to move on to the next project. Bucket 80 is the minimum functionality to complete the course.
-1. You must implement the __str__ method for the `DatalogProgram` class.
+1. You must implement the `__str__` method for the `DatalogProgram` class -- see [PARSER.md](docs/PARSER.md).
 1. You must implement a deterministic top-down parser that chooses which production to use based on the current token.
     1. You must have a function for each non-terminal and you may use AI to generate the more trivial non-terminals after giving it several examples of one that you have implemented.
     1. You must implement a recursive-descent parser using `FIRST` sets.
@@ -143,7 +143,7 @@ Submit Project 2 for grading by doing the following:
 Here is the suggested order for Project 2:
 
 1. Run the tests in `test_datalogprogram.py` -- any tests associated with `DatalogProgram.__str__` should fail
-1. Implement the `DatalogProgram.__str__` function so that the tests pass -- what it should output is described in the project description on [learningsuite.byu.edu](https://learningsuite.byu.edu) in the _Content_ section.
+1. Implement the `DatalogProgram.__str__` function so that the tests pass -- what it should output is described in [PARSER.md](docs/PARSER.md).
 1. Write the grammar for a Datalog program.
 1. For each production in the Datalog program grammar:
 
