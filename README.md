@@ -138,6 +138,20 @@ Submit Project 2 for grading by doing the following:
     1. A screen shot showing no issues with `pre-commit run --all-files`.
   * Confirm on the GitHub Actions pane that the pass-off tests passed, or alternatively, goto the Project 1 URL, find the green checkmark or red x, and click it to confirm the auto-grader score matches the pass-off results from your system.
 
+### Paragraph on AI
+
+Guidelines for answering
+
+_"A short paragraph outlining (a) how you prompted the AI to generate any code (if you used it) and (b) how you determined the quality and correctness of that code."_
+
+These guidelines give examples from Project 1.
+
+* Brief means no more than 500 words.
+* Be specific about what code was generated. _"AI generated FSM code for `QMARK`, `LEFT_PAREN`, `RIGHTPAREN`, and `COMMA`."_
+* Be general about the final form of the prompts used to generate the code and any prompt iteration that was required. _"I gave the AI example code and asked it to create code that matched the pattern, and style, in that example code. I had to revise the prompt to specifically ask it to not generalize an FSM to detect a supplied string."_
+* Be specific about how you determined the quality and correctness of generated code. _"A manual visual inspection was sufficient to determine quality and correctness because the generated code was trivial. I also ran the code quality tools on the generated code as a second level check."_
+* Be specific about where else AI was leveraged. _"I used AI to breakdown and explain the pseudo-code for the `lexer` algorithm as well as the `FiniteStateMachine` class. AI also provided test inputs for my `STRING` FSM to help debug the apostrophe escape sequence."_
+
 ## Best Practices
 
 Here is the suggested order for Project 2:
