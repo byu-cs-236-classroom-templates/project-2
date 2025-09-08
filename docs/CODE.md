@@ -17,8 +17,8 @@ Here are the relevant files and folders for Project2
   * `lexer.py`
 
 **Do not copy** the following files:
-  * `token.py` since it is unchanged from what was given to you inProject 1. 
-  * any of the test files from Projet 1
+  * `token.py` since it is unchanged from what was given to you inProject 1.
+  * any of the test files from Project 1
 
 **Ignoring comments.** Comments are not used to generate the `DatalogProgram` in Project 2, so you will modify `lexer.py` to ignore comments. Edit `lexer.py` and add `COMMENT` to the list of `hidden` tokens. So `WHITESPACE` and `COMMENT` should both be hidden and not passed to the parser.
 
@@ -53,11 +53,11 @@ A `DatalogProgram` consists of `schemes`, `facts`, `rules`, and `queries`. The `
 
 The `rules` in the `DatalogProgram` are not simple lists of predicates. Rather, the `rules` are a list of  of a _head_ predicate with a list of predicates. The head predicate only has `ID` parameter types while the predicates in the list can have either `ID` or `STRING` in the parameters. These attributes are accessed directly as in `rule.head` and `rule.predicates` where `rule` is an instance of the `Rule` class.
 
-The `Parameter` and `Predicate` classes both have an implementation of the `__str__` function for pretty printing. The implementation `DatalogProgram.__str__` is **not given and must be implemented by you.** There are tests in `./tests/test_datalogprogram.py` to test the `DatalogProgram.__str__` function. The tests should pass when the function is implemented correctly. There are also `__repr__` functions defined for the classes. These make debugging easier. As your favorite LLM, _"What are the __reper__ functions for in Python?"_
+The `Parameter` and `Predicate` classes both have an implementation of the `__str__` function for pretty printing. The implementation `DatalogProgram.__str__` is **not given and must be implemented by you.** There are tests in `./tests/test_datalogprogram.py` to test the `DatalogProgram.__str__` function. The tests should pass when the function is implemented correctly. There are also `__repr__` functions defined for the classes. These make debugging easier. As your favorite LLM, _"What are the __repr__ functions for in Python?"_
 
 ### parser.py
 
-The bulk of the coding for the project is in the `src/project2/parser.py` module. See the project description in [PARSER.md](PARSER.md), lecture notes in [learningsuite.byu.edu](https://learningsuite.byu.edu) in the _Content_ section in both _Lectures_ and _Projects_, and the Jupyter notebook tutorials in the `docs` folder. 
+The bulk of the coding for the project is in the `src/project2/parser.py` module. See the project description in [PARSER.md](PARSER.md), lecture notes in [learningsuite.byu.edu](https://learningsuite.byu.edu) in the _Content_ section in both _Lectures_ and _Projects_, and the Jupyter notebook tutorials in the `docs` folder.
 
 The `src/project2/parser.py` module provides three things out of the box:
 
