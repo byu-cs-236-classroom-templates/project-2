@@ -1,7 +1,7 @@
 # type: ignore
 import os
-from project2.project2 import project2 as compute  # type: ignore[import-untyped]
 
+from project2.project2 import project2 as compute  # type: ignore[import-untyped]
 
 _TEST_FUNC = compute
 _TEST_ROOT_DIR = "./tests/resources/project2-passoff/"

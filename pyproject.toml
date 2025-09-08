@@ -20,6 +20,8 @@ dev = [
   "mypy",
   "ruff",
   "pre-commit",
+  "ipykernel",
+  "ipytest",
 ]
 
 classroom = [
