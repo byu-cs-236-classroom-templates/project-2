@@ -36,6 +36,7 @@ lint.extend-select = ["I","FIX002", "TD001"]
 style = "https://raw.githubusercontent.com/wemake-services/wemake-python-styleguide/master/styles/mypy.toml"
 
 [tool.mypy]
+files = ["src"]
 exclude = [
   "(^|/)tests?/",
 ]
