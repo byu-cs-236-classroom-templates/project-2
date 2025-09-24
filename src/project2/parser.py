@@ -23,8 +23,6 @@ class UnexpectedTokenException(Exception):
         token (Token): The actual token that was encountered.
     """
 
-    __slots__ = ["expected_type", "token"]
-
     def __init__(
         self,
         expected_type: TokenType,
@@ -49,8 +47,6 @@ class TokenStream:
         token_iterator (Iterator[Token]): A token iterator.
         token (Token): The current token.
     """
-
-    __slots__ = ["token", "_token_iterator"]
 
     def __init__(self, token_iterator: Iterator[Token]) -> None:
         self._token_iterator = token_iterator
