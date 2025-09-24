@@ -35,10 +35,10 @@ The `vscode` extensions for developing Project 2 are already installed as part o
 1. Clone the repository to your machine. Accepting the Project 2 assignment on GitHub classroom creates a repository for your submission. You need to clone that repository to your machine. Copy the URL generated after accepting the assignment and in a terminal on your machine in a sensible location. From an integrated terminal, type `git clone \<URL\>` where `\<URL\>` is the one you copied. Or open a new vscode window, select _Clone Git Repository_, and paste the URL you copied. If you followed the URL to GitHub, then you can recopy the URL using the "<> Code ▼" button.
 1. Create and activate a virtual environment in the project directory.  Revisit Project 0 for a reminder on how to create the virtual environment. There is also a _cheat sheet_ at [learningsuite.byu.edu](https://learningsuite.byu.edu) _Content_ &rarr; _Projects_ &rarr; _Projects Cheat Sheet_.
 1. Install the project package. **Be sure your virtual environment is active before installing the package!** In a terminal in the virtual environment in the project directory do: `pip install --editable ".[dev]"`. Use `pip3` instead of `pip` if your system requires it.
-1. Verify the package installation. From the terminal in which you activated the virtual environment and installed the project package, type `project1` and hit enter. You should see the below output.
+1. Verify the package installation. From the terminal in which you activated the virtual environment and installed the project package, type `project2` and hit enter. You should see the below output.
     ```
-    $ project1
-    usage: project1 <input file>
+    $ project2
+    usage: project2 <input file>
     ```
 1. Install `pre-commit` for the project. **Be sure your virtual environment is active before installing pre-commit!**. In a terminal in the virtual environment in the project directory do: `pre-commit install`
 1. Verify the `pre-commit` installation. From the terminal in which you installed `pre-commit`, type `pre-commit run --all-files` and hit enter. You should see something like the below at the end of the setup output:
@@ -56,7 +56,7 @@ The `vscode` extensions for developing Project 2 are already installed as part o
     ```
 1. Verify that tests are ready to run. Open the _Testing Pane_ in VS Code by clicking on the test tube icon. If you see
     ```
-    pytest Discovery Error [project-1]
+    pytest Discovery Error [project-2]
     ```
     then you must open the _Command Palette_ from the _View_ menu, choose `Python: Select Interpreter`, and choose the interpreter for the virtual environment (probably `Python 3.12.5 (.venv)`).
 1. **IMPORTANT**: Copy the below files from your solution to Project 1 into the `src/project2/` folder:
@@ -169,7 +169,7 @@ Submit Project 2 for grading by doing the following:
     1. Your GitHub ID and Project 2 URL for grading.
     1. A short paragraph outlining (a) how you prompted the AI to generate any code (if you used it) and (b) how you determined the quality and correctness of that code.
     1. A screen shot showing no issues with `pre-commit run --all-files`.
-  * Confirm on the GitHub Actions pane that the pass-off tests passed, or alternatively, goto the Project 1 URL, find the green checkmark or red x, and click it to confirm the auto-grader score matches the pass-off results from your system.
+  * Confirm on the GitHub Actions pane that the pass-off tests passed, or alternatively, goto the Project 2 URL, find the green checkmark or red x, and click it to confirm the auto-grader score matches the pass-off results from your system.
 
 ### Paragraph on AI
 
