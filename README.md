@@ -279,3 +279,13 @@ To determine what needs to be in these classes, use the code and the grammar as 
 #### Should you store token types in the data structures created by the parser?
 
 No, don't store tokens or token types in the data structures created by the parser. The data structures created by the parser should be decoupled from both the lexer and the parser as defined by the data structures in `src/project2/datalogprogram.py` that you must use.
+
+#### Why is the auto-grader not running any tests on my latest commit?
+
+In the past when the auto-grader finds no tests to run it is almost always a result of using arbitrary expressions or function calls in an f-string: `f"{some_function(input)} breaks the auto-grader."` Such arbitrary expressions or function calls are almost always found in the `DatalogProgram.__str__` implementation.
+As a general rule, f-strings should only reference variables:
+
+```
+out: string = some_function(input)
+return `f"{out} makes the auto-grader happy."
+```
