@@ -71,6 +71,7 @@ The `vscode` extensions for developing Project 2 are already installed as part o
 1. Project pass-off is on GitHub. You will commit your final solution to the `master` branch of your local repository and then push that commit to GitHub. Multiple commits, and pushes, are allowed. A push triggers a GitHub action that is the auto-grader for pass-off. The TAs look at both the result of the auto-grader on GitHub and your code to determine your final score. Projects that use iteration instead of tail recursion will not be accepted.
 1. You must pass all integration tests up to, and including, `tests/test_passoff_80.py` to move on to the next project. Bucket 80 is the minimum functionality to complete the course.
 1. You must implement the `__str__` method for the `DatalogProgram` class -- see [PARSER.md](docs/PARSER.md).
+1. You must write a test for each rule (i.e., production) in the grammar.
 1. You must implement a deterministic top-down parser that chooses which production to use based on the current token.
     - You must have a function for each non-terminal.
     - You must implement a recursive-descent parser using `FIRST` sets.
@@ -119,7 +120,10 @@ The wrapper is designed to make implementing recursive descent parsing with `FIR
 
 As stated before, testing will be done through Github Classroom. You can also test your code locally with your own input, and by running the test cases in `vscode`. If you forgot how to do this, review the Project 0 help video here: https://www.youtube.com/watch?v=jZOf5oN-lKA. Just like Project 0, your grade will be whatever grade is on Github Classroom when you submit your code.
 
-The `tests/test_parser.py` file does include a _docstring_ at the end of the file showing an example for how you might consider unit testing your parser as you develop. _Test driven development_ (TDD) is a development mindset driven by tests. In general, you write a test for the new functionality, verify the test fails, implement the functionality, and then verify the test passes. TDD is an effective approach to breaking a problem into small manageable pieces.
+The [Project Requirements](#project-requirements) state that you must write a test for every rule (i.e., production) in the grammar.
+The `tests/test_parser.py` file does include a _docstring_ at the end of the file showing an example for how you might consider writing such tests for your parser as you develop.
+
+_Test driven development_ (TDD) is a development mindset driven by tests. In general, you write a test for the new functionality, verify the test fails, implement the functionality, and then verify the test passes. TDD is an effective approach to breaking a problem into small manageable pieces.
 
 See the [AI Policy](#ai-policy-for-project-2) for instructions on when to use and not use AI in generating tests.
 
