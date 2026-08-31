@@ -50,6 +50,7 @@ class TokenStream:
 
     def __init__(self, token_iterator: Iterator[Token]) -> None:
         self._token_iterator = token_iterator
+        self.token = Token.undefined("")
         self.advance()
 
     def __repr__(self) -> str:
