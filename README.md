@@ -174,7 +174,7 @@ Submit Project 2 for grading by doing the following:
     1. Your GitHub ID and Project 2 URL for grading.
     1. A short paragraph outlining (a) how you prompted the AI to generate any code (if you used it) and (b) how you determined the quality and correctness of that code.
     1. A screen shot showing no issues with `pre-commit run --all-files`.
-  * Confirm on the GitHub Actions pane that the pass-off tests passed, or alternatively, goto the Project 2 URL, find the green checkmark or red x, and click it to confirm the auto-grader score matches the pass-off results from your system.
+  * Confirm on [classroom50.org](https://classroom50.org/login) that the pass-off tests passed.
 
 ### Paragraph on AI
 
