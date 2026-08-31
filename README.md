@@ -63,7 +63,8 @@ The `vscode` extensions for developing Project 2 are already installed as part o
     * `fsm.py`
     * `lexer.py`
   The `token.py` file is unchanged here and should not be copied over. None of test files from Project 1 should be copied over either.
-1. **IMPORTANT**: Comments are not used to generate the `DatalogProgram` in Project 2, so you will modify `lexer.py` to ignore comments. Edit `lexer.py` and add `COMMENT` to the list of hidden tokens. So `WHITESPACE` and `COMMENT` should both be hidden and not passed to the parser.
+1. **IMPORTANT**: Edit `fsm.py` and `lexer.py` to replace `project1` with `project2` in all the imports and docstring tests.
+1. **IMPORTANT**: Edit `lexer.py` and add `COMMENT` to the list of hidden tokens. So `WHITESPACE` and `COMMENT` should both be hidden and not passed to the parser. Comments are not used to generate the `DatalogProgram` in Project 2.
 
 ## Project Requirements
 
