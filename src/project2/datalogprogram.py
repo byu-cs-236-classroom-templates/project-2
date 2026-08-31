@@ -4,7 +4,7 @@ The module includes abstractions for the `Parameter`, `Predicate`, `Rule`,
 and a `DatalogProgram`.
 """
 
-from typing import Any, Literal
+from typing import Literal
 
 ParameterType = Literal["ID", "STRING"]
 """
@@ -28,7 +28,7 @@ class Parameter:
         self.value = value
         self.parameter_type = parameter_type
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Parameter):
             return False
         return (self.parameter_type == other.parameter_type) and (
@@ -78,7 +78,7 @@ class Predicate:
         self.name = name
         self.parameters = parameters
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Predicate):
             return False
         return (self.name == other.name) and (self.parameters == other.parameters)
@@ -118,7 +118,7 @@ class Rule:
         self.head = head
         self.predicates = predicates
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         if not isinstance(other, Rule):
             return False
         return (self.head == other.head) and (self.predicates == other.predicates)
@@ -128,7 +128,7 @@ class Rule:
 
     def __str__(self) -> str:
         predicates = ",".join([str(i) for i in self.predicates])
-        return f"{str(self.head)} :- {predicates}"
+        return f"{self.head!s} :- {predicates}"
 
 
 class DatalogProgram:

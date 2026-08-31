@@ -4,8 +4,8 @@ These are the two project level entry points: `project2` and `project2cli`.
 All the pass-off tests use `project2`. This file should not need to be modified.
 """
 
+from collections.abc import Iterator
 from sys import argv
-from typing import Iterator
 
 from project2.datalogprogram import DatalogProgram
 from project2.lexer import lexer

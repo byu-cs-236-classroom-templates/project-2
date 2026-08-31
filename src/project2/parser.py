@@ -4,7 +4,7 @@ Provides the parser and error interface for when parsing fails for Datalog
 programs.
 """
 
-from typing import Iterator
+from collections.abc import Iterator
 
 from project2.datalogprogram import DatalogProgram
 from project2.token import Token, TokenType

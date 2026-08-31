@@ -18,7 +18,7 @@ Examples:
     (ID,"id",42)
 """
 
-from typing import Any, Literal
+from typing import Literal
 
 TokenType = Literal[
     "COLON",
@@ -90,7 +90,7 @@ class Token:
             "(" + self.token_type + ',"' + self.value + '",' + str(self.line_num) + ")"
         )
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         if isinstance(other, Token):
             return (
                 self.token_type == other.token_type
