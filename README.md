@@ -16,6 +16,7 @@ The predictive top-down parsing algorithm is derived from the Datalog grammar us
 - [Recursive descent parsing with FIRST sets](docs/Recursive_descent_parsing_code_example_2024.ipynb) (Jupyter Notebook)
 - [Recursive descent parsing with FOLLOW sets](docs/Recursive_descent_parsing_code_with_FOLLOW_example_2024.ipynb) (Jupyter Notebook)
 - Lecture notes in [learningsuite.byu.edu](https://learningsuite.byu.edu) including slides on _Building your tests for Project 2_.
+- [EXPR.md](docs/EXPR.md): describes how to add expressions for deeper learning.
 
 ## Table of Contents
 
@@ -27,6 +28,7 @@ The predictive top-down parsing algorithm is derived from the Datalog grammar us
 - [Code Quality Tools](#code-quality-tools)
 - [Submission and Grading](#submission-and-grading)
 - [Best Practices](#best-practices)
+- [Deeper Learning](#deeper-learning)
 
 ## Developer Setup
 
@@ -294,3 +296,9 @@ As a general rule, f-strings should only reference variables:
 out: string = some_function(input)
 return `f"{out} makes the auto-grader happy."
 ```
+
+## Deeper Learning
+
+**There is no extra credit for deeper learning as the learning is the reward**.
+
+Datalog does not require recursion to parse--that requirement is artificial--as its definition is not structurally recursive. All lists in Datalog can be resolved with iteration. This deeper learning adds expressions to the grammar which are structurally recursive. The details are found in [EXPR.md](docs/EXPR.md). Expressions being structurally recursive must be parsed to an inductive data structure--an expression tree. Evaluating expressions requires structural recursion of the expression tree. This deeper learning covers critical topics for compilers and interpreters. If these are topics that you enjoy, then consider taking CS 330!
