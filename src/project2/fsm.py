@@ -11,12 +11,21 @@ to determine if it reads a prefix of the input.
 
 An FSM normally reads until there are no more characters left in the input
 and then it checks what state it is in to determine whether it accepts or rejects.
-In our application to lexical analysis we want the FSM to stop reading as soon as it
-determines it is done reading and knows if it will accept or reject. As such, the
-end of input is marked when the FSM signals it is "done" by returning `True` when
-computing the next state. At that point, it is safe to check if the FSM is in an
-accept or reject state to know whether or not it reads a prefix of the input and
-how many characters are in that prefix that it can read.
+In our application to lexical analysis we want the FSM to stop reading when it
+determines if it will accept or reject. The end of input is thus marked when the
+FSM signals it is "done" by returning `True` when computing the next state. At that
+point, it is safe to check if the FSM is in an accept or reject state to know
+whether or not it reads a prefix of the input and how many characters are in that
+prefix that it can read.
+
+Clarification on counting input characters: returning `False` means the character
+is part of the input prefix whereas returning `True` means the character is not
+part of the input prefix. For example, in a `:-x` input for the colon-dash machine,
+reading the `:` returns `False` as does reading the `-` after the `:`. The `run_fsm`
+function counts these two characters from the input stream as part of the prefix at
+this point--a consequence of the `False` output for that sequence of two inputs. It's
+the input `x` that causes the machine to return `True`. The `x` input is not counted
+as part of the prefix for colon-dash.
 """
 
 from collections.abc import Callable
@@ -28,7 +37,7 @@ State = Callable[[str], tuple["State", bool]]
 """
 `State` is a function that takes the character to read as a `str` and returns
 a `bool` signifying whether or not it is done reading and the next `State`
-(`State` : `I` -> `bool` times `State`).
+(`State` : `I` -> `State` times `bool`).
 """
 
 
