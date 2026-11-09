@@ -34,7 +34,7 @@ are arithmetic expressions containing variables, integer constants, `+`,
 For example:
 
 ``` text
-small(X) :- value(X), X * 2 + 1 < 10.
+small(X) :- value(X); X * 2 + 1 < 10.
 ```
 
 ------------------------------------------------------------------------
@@ -71,7 +71,8 @@ parameter       -> STRING | ID
 ## Lexer Extension
 
 The expression extension needs one new lexer rule, `INT`, along with
-three new single-character tokens: `PLUS`, `MULTIPLY`, and `LESS`.
+four new single-character tokens: `SEMICOLON`, `PLUS`, `MULTIPLY`, and
+`LESS`.
 `LEFT_PAREN` and `RIGHT_PAREN` already exist.
 
 `INT` is a (possibly negative) sequence of digits:
@@ -97,7 +98,7 @@ comparison expression:
 ``` text
 rule                 -> headPredicate COLON_DASH predicate predicateList expressionOpt PERIOD
 
-expressionOpt        -> COMMA expression
+expressionOpt        -> SEMICOLON expression
                       | lambda
 
 expression           -> addExpression LESS addExpression
@@ -116,14 +117,14 @@ factor               -> ID
                       | LEFT_PAREN addExpression RIGHT_PAREN
 ```
 
-The comma in `expressionOpt` makes the comparison another body condition
-syntactically:
+The `SEMICOLON` in `expressionOpt` separates the comparison from the
+ordinary predicates:
 
 ``` text
-p(X) :- q(X), X < 10.
+p(X) :- q(X); X < 10.
 ```
 
-while still requiring it to be the final condition in the rule.
+The comparison must also be the final item in the rule.
 
 All other productions remain unchanged.
 
@@ -140,50 +141,50 @@ answer(X) :- value(X).
 A rule may have one comparison at the end:
 
 ``` text
-answer(X) :- value(X), X < 10.
+answer(X) :- value(X); X < 10.
 ```
 
 Arithmetic may occur on either side, and integer literals may be
 negative:
 
 ``` text
-answer(X) :- value(X), X * 2 + 1 < -10.
+answer(X) :- value(X); X * 2 + 1 < -10.
 ```
 
 Variables from multiple predicates may be used:
 
 ``` text
-answer(X) :- left(X), right(Y), X + Y * 2 < 20.
+answer(X) :- left(X), right(Y); X + Y * 2 < 20.
 ```
 
 Parentheses may override normal arithmetic precedence:
 
 ``` text
-answer(X) :- left(X), right(Y), (X + Y) * 2 < 20.
+answer(X) :- left(X), right(Y); (X + Y) * 2 < 20.
 ```
 
 The following are intentionally not part of the language:
 
 ``` text
-answer(X) :- value(X), X < 10, other(X).
+answer(X) :- value(X); X < 10, other(X).
 ```
 
 The comparison must be last.
 
 ``` text
-answer(X) :- value(X), X + 10.
+answer(X) :- value(X); X + 10.
 ```
 
 A comparison must contain `<`.
 
 ``` text
-answer(X) :- value(X), X < 10 < 20.
+answer(X) :- value(X); X < 10 < 20.
 ```
 
 `<` cannot be chained. A comparison has exactly one `<`.
 
 ``` text
-answer(X) :- value(X), X + (Y < 10) < 20.
+answer(X) :- value(X); X + (Y < 10) < 20.
 ```
 
 `<` cannot occur inside an arithmetic expression.
@@ -390,7 +391,7 @@ value(7).
 Then for the rule:
 
 ``` text
-small(X) :- value(X), X * 2 + 1 < 10.
+small(X) :- value(X); X * 2 + 1 < 10.
 ```
 
 `value(X)` supplies values for `X`, and `X * 2 + 1 < 10` is later
@@ -411,7 +412,7 @@ Every variable used in the comparison must already be bound by an
 ordinary predicate earlier in the body:
 
 ``` text
-answer(X) :- value(X), X + Y < 10.
+answer(X) :- value(X); X + Y < 10.
 ```
 
 is not valid, because nothing in the body binds `Y`. Expressions are
@@ -431,13 +432,14 @@ establish bindings, then one filter checks them" model simple.
 The extended grammar supports rules such as:
 
 ``` text
-result(X) :- p(X), q(Y), (X + Y) * 2 < Z + 10.
+result(X) :- p(X), q(Y); (X + Y) * 2 < Z + 10.
 ```
 
 For Project 2, this extension introduces two concepts:
 
 **Lexing.** A new `INT` token, including a leading `-` for negative
-literals, plus single-character `PLUS`, `MULTIPLY`, and `LESS` tokens.
+literals, plus single-character `SEMICOLON`, `PLUS`, `MULTIPLY`, and
+`LESS` tokens.
 
 **Parsing and representation.** Operator precedence and parentheses
 determine the structure of a recursive expression tree, built from
